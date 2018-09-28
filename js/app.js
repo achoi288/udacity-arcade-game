@@ -33,8 +33,8 @@ class Enemy {
      * @description Check if the Enemy has collided with the Player
      */
     detectCollision() {
-        if (this.x < (player.x + 50) &&
-            this.x > (player.x - 50) &&
+        if (this.x < (player.x + 75) &&
+            this.x > (player.x - 75) &&
             this.row === player.row)
             player.resetPosition();
     }
