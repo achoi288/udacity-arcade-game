@@ -1,17 +1,52 @@
-class Enemy {
+/*
+ * @description The Character class has a method to render its image
+ * @constructor
+ * @param {number} x - The x-coordinate to start at
+ * @param {number} y - The y-coordinate to start at
+ * @param {number} row - The row to start at
+ * @param {string} sprite - The path to the image file representing this Character
+ */
+class Character {
+
+    constructor(x, y, row, sprite) {
+        this.x = x;
+        this.xStart = x;
+        this.y = y;
+        this.row = row;
+        this.sprite = sprite;
+    }
+
+    /*
+     * @description Draw the character on the screen
+     */
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
+
+/*
+ * @description The Enemy class extends Character and has additional
+ * methods to update its position, detect for collisions with the
+ * Player and to check boundaries.
+ * @constructor
+ * @param {number} x - The x-coordinate to start at
+ * @param {number} row - The row to start at
+ * @param {number} speed - The speed the enemy travels at
+ */
+class Enemy extends Character {
 
     constructor(x, row, speed) {
-        this.xStart = x;
-        this.x = x;
-        this.row = row;
+        let y = 0;
 
         if (row === 1) {
-            this.y = 60;
+            y = 60;
         } else if (row === 2) {
-            this.y = 143;
+            y = 143;
         } else if (row === 3) {
-            this.y = 226;
+            y = 226;
         }
+
+        super(x, y, row, 'images/enemy-bug.png');
 
         this.speed = speed;
     }
@@ -48,16 +83,13 @@ class Enemy {
         if (this.x > 505)
             this.x = this.xStart;
     }
-
-    /*
-     * @description Draw the character on the screen
-     */
-    render() {
-        ctx.drawImage(Resources.get('images/enemy-bug.png'), this.x, this.y);
-    }
 }
 
-class Player {
+/*
+ * methods to handle left, up, right, down and spacebar key presses, 
+ * reset to its starting position and change its sprite
+ */
+class Player extends Character {
 
     constructor() {
         this.xStart = 200;
@@ -67,11 +99,7 @@ class Player {
         this.row = 5;
     }
 
-    /*
-     * @description Draw the character on the screen
-     */
-    render() {
-        ctx.drawImage(Resources.get('images/char-boy.png'), this.x, this.y);
+        this.yStart = this.y;
     }
 
     /*
