@@ -86,20 +86,30 @@ class Enemy extends Character {
 }
 
 /*
+ * @description The Player class extends Character and has additional
  * methods to handle left, up, right, down and spacebar key presses, 
  * reset to its starting position and change its sprite
+ * @constructor
  */
 class Player extends Character {
 
     constructor() {
-        this.xStart = 200;
-        this.yStart = 385;
-        this.x = this.xStart;
-        this.y = this.yStart;
-        this.row = 5;
-    }
+        let sprites = [
+            'images/char-boy.png',
+            'images/char-cat-girl.png',
+            'images/char-horn-girl.png',
+            'images/char-pink-girl.png',
+            'images/char-princess-girl.png'
+        ]
+
+        let spriteIndex = 0;
+
+        super(200, 385, 5, sprites[spriteIndex]);
 
         this.yStart = this.y;
+
+        this.sprites = sprites;
+        this.spriteIndex = 0;
     }
 
     /*
@@ -112,7 +122,7 @@ class Player extends Character {
     }
 
     /*
-     * @description Handle user input for left, up, right, down key presses
+     * @description Handle user input for left, up, right, down and spacebar key presses
      * @param {number} key - The input key to handle
      */
     handleInput(key) {
@@ -135,7 +145,22 @@ class Player extends Character {
                 this.y += 83;
                 this.row += 1;
             }
+        } else if (key === 'spacebar') {
+            this.changeSprite();
         }
+    }
+
+    /*
+     * @description Change the Player sprite to the next in the array
+     */
+    changeSprite() {
+        this.spriteIndex++;
+
+        if (this.spriteIndex > (this.sprites.length - 1)) {
+            this.spriteIndex = 0;
+        }
+
+        this.sprite = this.sprites[this.spriteIndex];
     }
 }
 
@@ -156,7 +181,8 @@ document.addEventListener('keyup', function (e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        32: 'spacebar'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
